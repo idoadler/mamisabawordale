@@ -20,8 +20,8 @@ let answersLetters = [];
 //numOfWordale is calculated later by the difference from today to the launch of wordale
 let numOfWordale = 0;
 // the launch date of wordale
-const startDate = new Date(2022, 0, 11);
-const summerClockStartDate = new Date(2022,2,26)
+const summerClockStartDate = new Date(2023,3,24)
+const launchDelay = -79
 //today:
 let today = new Date();
 //word index is the numOfWordale calculated later on
@@ -29,19 +29,17 @@ let pickedWord = pickWord();
 //set the timer for next wordale:
 countDownTimer();
 
-//load statistics:
-let guessDistribution;
-
-
 function pickWord() {
     //today = new Date();
     var differenceInTime = today.getTime() - summerClockStartDate.getTime();
 console.log(summerClockStartDate)
 console.log(today)
+console.log(differenceInTime)
 
     // To calculate the no. of days between two dates
-    var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)) + 74; //added 74 since it screwed the 1 hour difference between gmt+3 and gmt+2; 
+    var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)) + launchDelay; //added the days passed since summer time to launch;
     console.log(differenceInDays)
+    console.log(listOfWords[differenceInDays])
     numOfWordale = differenceInDays;
     return listOfWords[differenceInDays];
 }
@@ -156,16 +154,7 @@ function eraseLetter() {
         document.getElementById(tile).setAttribute('data-animation', 'idle');
         document.getElementById(tile).style.border = "solid rgb(212, 212, 212)";
         currentWord = currentWord.substring(0, currentWord.length - 1);
-
     }
-    //     setInterval(removeAnimation('wakeup'),5000);
-    //     function removeAnimation(animation){ 
-    //         for (i=1;i<=5;i++){
-    //             document.getElementById(`tile${rowCount}${i}`).setAttribute('data-animation','idle');
-    //             document.getElementById(`tile${rowCount}${i}`).classList.remove(animation);
-    //         }
-    // };
-
 }
 
 function compareWords() {
@@ -319,7 +308,7 @@ function shareResults() {
         shareResult = shareResult + result + "\n";
 
     }
-    shareResult = shareResult + "\n" + "וורדל בעברית:" + "\n" + "https://yairhasfari.github.io/wordale";
+    shareResult = shareResult + "\n" + "וורדל ממיסבא:" + "\n" + "https://idoadler.github.io/mamisabawordale";
     navigator.clipboard.writeText(shareResult);
     // let shareButton = "<input id=\"shareButton\" onclick=\"shareResults()\" value=\"תוצאות הועתקו ללוח\">"
     // document.getElementById('notify2').innerHTML = shareButton;
@@ -335,8 +324,6 @@ function openInstructions() {
     }
 }
 function saveUserData() {
-    //update statistics:
-    //updateStatistics();
     //saves the date the user is currently on
     localStorage.setItem('userDate', today);
     //saves the answers arrays of today
@@ -419,25 +406,6 @@ function countDownTimer() {
         }
     }, 1000);
 }
-function updateStatistics() {
-    // //get older statistics:
-    // if (endOfGameToday === true) {
-    //     let storagePlayed = localStorage.getItem('played')
-    //     if (storagePlayed !== null) {
-    //         newPlayed = JSON.parse(storagePlayed)+1;
-    //     }
-    //     else newPlayed=1;
-    //     localStorage.setItem('played',newPlayed);
-    // }
-    // /*
-    // localStorage.setItem('guessDistribution',guessDistribution);
-    // localStorage.setItem('played',played);
-    // localStorage.setItem('wins',wins);
-    // localStorage.setItem('streak',streak);
-    // localStorage.setItem('maxStreak',maxStreak);
-    // */
-
-}
 loadUserData();
 
 document.addEventListener("visibilitychange",function(){
@@ -446,45 +414,3 @@ document.addEventListener("visibilitychange",function(){
     location.reload();
     }
 });
-// runAtMidnight(window.location.reload);
-
-// function runAtMidnight(fn){
-//     var midnight = new Date();
-//     midnight.setHours(24, 0, 0, 0);
-//     var timeUntilMidnight = midnight.getTime() - Date.now();
-//     setTimeout(fn, timeUntilMidnight);
-// }
-/*
-function getWordsToArray(){
-    hebWordsArray=[];
-    const fs = require('fs')
-    let wordExists = false;
-    var wordsHebrew = fs.readFileSync('he-IL.dic', 'utf8')
-    splitWordsHebrew = wordsHebrew.split('\r\n');
-    for (i = 0; i < splitWordsHebrew.length; i++) {
-        if (splitWordsHebrew[i].length===5) {
-            if (!(splitWordsHebrew[i].includes('\"'))){
-            hebWordsArray.push(splitWordsHebrew[i]);
-            }
-        }
-    }
-    var file = fs.createWriteStream('hello2.txt');
-    file.on('error', function(err) { Console.log(err) });
-    hebWordsArray.forEach(value => file.write(`${value} `));
-    file.end();
-}
-*/
-//const fs = require('fs')
-
-// var arr = [];
-// while(arr.length < 800){
-//     var r = Math.floor(Math.random() * 375245) + 1;
-//     if(arr.indexOf(r) === -1) arr.push(r);
-// }
-// console.log(arr);
-/*
-var file = fs.createWriteStream('randoms.txt');
-    file.on('error', function(err) { Console.log(err) });
-    arr.forEach(value => file.write(`${value} `));
-    file.end();*/
-
