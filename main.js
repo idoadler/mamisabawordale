@@ -37,9 +37,9 @@ console.log(today)
 
     // To calculate the no. of days between two dates
     var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)) + fakeDays; //added the days passed since summer time to launch;
-console.log(differenceInDays)
+    numOfWordale = differenceInDays - fakeDays;
+console.log(numOfWordale)
 //console.log(listOfWords[differenceInDays])
-    numOfWordale = differenceInDays;
     return listOfWords[differenceInDays];
 }
 
