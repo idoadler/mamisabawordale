@@ -20,8 +20,8 @@ let answersLetters = [];
 //numOfWordale is calculated later by the difference from today to the launch of wordale
 let numOfWordale = 0;
 // the launch date of wordale
-const summerClockStartDate = new Date(2023,3,24)
-const launchDelay = -79
+const launchDate = new Date(2023,6,12)
+const fakeDays = 10
 //today:
 let today = new Date();
 //word index is the numOfWordale calculated later on
@@ -31,12 +31,12 @@ countDownTimer();
 
 function pickWord() {
 //today.setDate(today.getDate() + 2); // add days
-    var differenceInTime = today.getTime() - summerClockStartDate.getTime();
-console.log(summerClockStartDate)
+    var differenceInTime = today.getTime() - launchDate.getTime();
+console.log(launchDate)
 console.log(today)
 
     // To calculate the no. of days between two dates
-    var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)) + launchDelay; //added the days passed since summer time to launch;
+    var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)) + fakeDays; //added the days passed since summer time to launch;
 console.log(differenceInDays)
 //console.log(listOfWords[differenceInDays])
     numOfWordale = differenceInDays;
