@@ -299,7 +299,7 @@ function paintFinalLetter(letter, color) {
 
 }
 function shareResults() {
-    let shareResult = `וורדל\'ה # ${numOfWordale}` + "\n";
+    let shareResult = `וורדל\'ה ממיסבא # ${numOfWordale}` + "\n";
     shareResult += `נסיון ${wordCount} מתוך 6` + "\n";
 
     for (i = 0; i < answersColors.length; i++) {
