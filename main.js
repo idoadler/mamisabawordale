@@ -30,16 +30,15 @@ let pickedWord = pickWord();
 countDownTimer();
 
 function pickWord() {
-    //today = new Date();
+//today.setDate(today.getDate() + 2); // add days
     var differenceInTime = today.getTime() - summerClockStartDate.getTime();
 console.log(summerClockStartDate)
 console.log(today)
-console.log(differenceInTime)
 
     // To calculate the no. of days between two dates
     var differenceInDays = Math.floor(differenceInTime / (1000 * 3600 * 24)) + launchDelay; //added the days passed since summer time to launch;
-    console.log(differenceInDays)
-    console.log(listOfWords[differenceInDays])
+console.log(differenceInDays)
+//console.log(listOfWords[differenceInDays])
     numOfWordale = differenceInDays;
     return listOfWords[differenceInDays];
 }
