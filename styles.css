@@ -175,7 +175,7 @@
 }
 }
     #instructions {
-    display: flexbox;
+    display: flex;
     left:50%;
     /* margin-left:-125px; */
     width: clamp(20vw,70vw,400px);
