@@ -225,7 +225,7 @@ function compareWords() {
 
     }
 
-    answer = answer.reverse();
+    //answer = answer.reverse();
     answersColors.push(answer);
 
 
