@@ -413,3 +413,99 @@ document.addEventListener("visibilitychange",function(){
     location.reload();
     }
 });
+const englishKeyboardToHebrew = {
+    a:'ש',
+    b:'נ',
+    c:'ב',
+    d:'ג',
+    e:'ק',
+    f:'כ',
+    g:'ע',
+    h:'י',
+    i:'נ',
+    j:'ח',
+    k:'ל',
+    m:'צ',
+    n:'מ',
+    p:'פ',
+    r:'ר',
+    s:'ד',
+    t:'א',
+    u:'ו',
+    v:'ה',
+    x:'ס',
+    y:'ט',
+    z:'ז',
+    ',':'ת',
+    '.':'ץ',
+    ';':'ף',
+    'l':'ך',
+    o:'מ',
+}
+const hebrewLetters = 'אבגדהוזחטיכלמנסעפצקרשתםןץףך';
+const suffixLetterToMiddleLetter = {
+    'ם':'מ',
+    'ן':'נ',
+    'ץ':'צ',
+    'ף':'פ',
+    'ך':'כ',
+}
+window.addEventListener('keydown', function (e) {
+    console.log(e.key);
+    if (e.key === 'Enter') {
+        sendWord();
+    }
+    if (e.key === 'Backspace') {
+        eraseLetter();
+    }
+    if (hebrewLetters.includes(e.key)) {
+        clickLetter(suffixLetterToMiddleLetter[e.key] || e.key);
+    }
+    const hebrewWordFromEnglish = englishKeyboardToHebrew[e.key.toLowerCase()];
+    if (hebrewLetters.includes(hebrewWordFromEnglish)) {
+        clickLetter(suffixLetterToMiddleLetter[hebrewWordFromEnglish] || hebrewWordFromEnglish);
+    }
+});
+
+// runAtMidnight(window.location.reload);
+
+// function runAtMidnight(fn){
+//     var midnight = new Date();
+//     midnight.setHours(24, 0, 0, 0);
+//     var timeUntilMidnight = midnight.getTime() - Date.now();
+//     setTimeout(fn, timeUntilMidnight);
+// }
+/*
+function getWordsToArray(){
+    hebWordsArray=[];
+    const fs = require('fs')
+    let wordExists = false;
+    var wordsHebrew = fs.readFileSync('he-IL.dic', 'utf8')
+    splitWordsHebrew = wordsHebrew.split('\r\n');
+    for (i = 0; i < splitWordsHebrew.length; i++) {
+        if (splitWordsHebrew[i].length===5) {
+            if (!(splitWordsHebrew[i].includes('\"'))){
+            hebWordsArray.push(splitWordsHebrew[i]);
+            }
+        }
+    }
+    var file = fs.createWriteStream('hello2.txt');
+    file.on('error', function(err) { Console.log(err) });
+    hebWordsArray.forEach(value => file.write(`${value} `));
+    file.end();
+}
+*/
+//const fs = require('fs')
+
+// var arr = [];
+// while(arr.length < 800){
+//     var r = Math.floor(Math.random() * 375245) + 1;
+//     if(arr.indexOf(r) === -1) arr.push(r);
+// }
+// console.log(arr);
+/*
+var file = fs.createWriteStream('randoms.txt');
+    file.on('error', function(err) { Console.log(err) });
+    arr.forEach(value => file.write(`${value} `));
+    file.end();*/
+
