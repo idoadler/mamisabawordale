@@ -1,6 +1,8 @@
 
 //  !!   listOfWords is in wordlist.js, hebWords is in hebwords.js    !! //
 
+import { storeWord } from './firebase.js';
+
 ////////* Variables: *///////
 
 // did user win todays game:
@@ -45,7 +47,7 @@ console.log(numOfWordale)
 
 function clickLetter(value) {
     if(endOfGameToday!=true){
-    currentRow = document.getElementById(`row${rowCount}`)
+    let currentRow = document.getElementById(`row${rowCount}`)
     for (let i = 1; i <= 5; i++) {
         let tile = `tile${rowCount}${i}`;
         if (document.getElementById(`${tile}`).innerHTML == '') {
@@ -71,7 +73,6 @@ function changeToFinal(value) {
     return value;
 }
 function sendWord() {
-
     if (win === false) {
         let x = checkSpell(currentWord);
         if (currentWord.length === 5) {
@@ -83,6 +84,7 @@ function sendWord() {
                 rowCount++;
                 answersLetters.push(currentWord);//keeps the word in answers array (not the colors)
                 saveUserData();//saves answers to localStorage
+                storeWord(currentWord, wordCount, today.toISOString().split('T')[0])
                 currentWord = '';//in order to start new word at next line
             } else {
                 animateWakeUp();
@@ -93,18 +95,18 @@ function sendWord() {
             animateWakeUp();
             openNotification("אין מספיק אותיות")
         }
-
     }
 }
+
 function animateWakeUp() {
-    for (i = 1; i <= 5; i++) {
+    for (let i = 1; i <= 5; i++) {
         setAnimation(i, 'wakeup');
         function setAnimation(k, animation) { 
             document.getElementById(`tile${rowCount}${i}`).classList.add(animation) 
         };
     }
     setTimeout(function () {
-        for (j = 1; j <= 5; j++) {
+        for (let j = 1; j <= 5; j++) {
                 document.getElementById(`tile${rowCount}${j}`).setAttribute('data-animation','idle');
                 document.getElementById(`tile${rowCount}${j}`).classList.remove('wakeup');}        
     }, 800);
@@ -116,7 +118,6 @@ function openNotification(message) {
     setTimeout(function () {
         document.getElementById('notify').style.height = "0%";
     }, 2000);
-
 }
 
 function openNotificationLong(message, bool) {
@@ -163,7 +164,7 @@ function compareWords() {
     let yellowIndices = [];
     let greyIndices = [];
     let usedYellowIndices = [];
-    for (i = 0; i <= 4; i++) {
+    for (let i = 0; i <= 4; i++) {
         //if letter exists in place:
         if (compareLetters(currentWord[i], pickedWord[i])) {
             greenIndices.push(i);
@@ -172,9 +173,9 @@ function compareWords() {
         }
     }
 
-    for (i = 0; i <= 4; i++) {
+    for (let i = 0; i <= 4; i++) {
         if (!greenIndices.includes(i)) {
-            for (j = 0; j < newWord.length; j++) {
+            for (let j = 0; j < newWord.length; j++) {
                 if (compareLetters(currentWord[i], newWord[j])) {
                     yellowIndices.push(i);
                     newWord = newWord.slice(0, j) + newWord.slice(j + 1);
@@ -183,7 +184,7 @@ function compareWords() {
             }
         }
     }
-    for (i = 0; i <= 4; i++) {
+    for (let i = 0; i <= 4; i++) {
         if (!yellowIndices.includes(i) && !(greenIndices.includes(i))) { //if letter exists anywhere else:
             greyIndices.push(i);
             //
@@ -191,14 +192,14 @@ function compareWords() {
         }
     }
     //splice used green ones from yelloweIndices:
-    for (i = 0; i < greenIndices.length; i++) {
+    for (let i = 0; i < greenIndices.length; i++) {
         if (yellowIndices.includes(greenIndices[i])) {
             let x = yellowIndices.indexOf(greenIndices[i]);
             yellowIndices.splice(x, 1);
         }
     }
     //color grey indices:
-    for (i = 0; i < greyIndices.length; i++) {
+    for (let i = 0; i < greyIndices.length; i++) {
         document.getElementById(`tile${wordCount}${greyIndices[i] + 1}`).setAttribute('data-animation', 'flip-in');
         document.getElementById(`tile${wordCount}${greyIndices[i] + 1}`).style.backgroundColor = "rgb(109, 113 ,115)";//gray
         document.getElementById(`tile${wordCount}${greyIndices[i] + 1}`).style.border = "solid rgb(109, 113 ,115)";//gray border
@@ -207,7 +208,7 @@ function compareWords() {
 
     }
     //color yellow indices:
-    for (i = 0; i < yellowIndices.length; i++) {
+    for (let i = 0; i < yellowIndices.length; i++) {
         document.getElementById(`tile${wordCount}${yellowIndices[i] + 1}`).setAttribute('data-animation', 'flip-in');
         document.getElementById(`tile${wordCount}${yellowIndices[i] + 1}`).style.backgroundColor = "rgb(194, 170, 82)";//yellow
         document.getElementById(`tile${wordCount}${yellowIndices[i] + 1}`).style.border = "solid rgb(194, 170, 82)";//yellow border
@@ -216,7 +217,7 @@ function compareWords() {
 
     }
     //color green indices on top of all else:
-    for (i = 0; i < greenIndices.length; i++) {
+    for (let i = 0; i < greenIndices.length; i++) {
         document.getElementById(`tile${wordCount}${greenIndices[i] + 1}`).setAttribute('data-animation', 'flip-in');
         document.getElementById(`tile${wordCount}${greenIndices[i] + 1}`).style.backgroundColor = "rgb(98, 159, 91)";//green
         document.getElementById(`tile${wordCount}${greenIndices[i] + 1}`).style.border = "solid rgb(98, 159, 91)";//green border
@@ -269,14 +270,14 @@ function pickMessage() {
         messageArray = ['וואו נלחצנו לרגע, כל הכבוד', 'שניה לפני הנפילה', 'הניחוש הגואל!!! כל הכבוד', 'מי חשב שלא תצליח/י? לא אנחנו', 'פאק נפל לנו הלב לתחתון. מזל. כל הכבוד', '!!!ניחוש אחרון?? אשכרה', 'מדובר בגול בדקה התשעים', 'ידענו שלא תוותר/י', 'אין עליך בעולם, התמדה זה הסוד', '.פאק זה היה קרוב', 'גדול!!! כמעט הפסדת ואז בסוף - לא', 'מברוק', 'אחלה את/ה תאמין/י לי', 'וואי וואי לא הימרתי שזה יעבוד', 'פששש, חזק', '.אין לי מילים. תרתי משמע', 'ממש ני-חוש שישי', 'פעם שישית גלידה, סתם לא', '..יפה! כלומר, נחמד', 'אה הצלחת בסוף? טוב', 'נו רואה? בסוף זה השתלם', 'מילה שלי שהצלחת']
     }
 
-    randIndex = Math.floor(Math.random() * (messageArray.length));
+    let randIndex = Math.floor(Math.random() * (messageArray.length));
 
     return messageArray[randIndex]
 }
 function checkSpell(word) {
     let wordExists = false;
-    splitWordsHebrew = hebWords.split(' ');
-    for (i = 0; i < splitWordsHebrew.length; i++) {
+    let splitWordsHebrew = hebWords.split(' ');
+    for (let i = 0; i < splitWordsHebrew.length; i++) {
         if (splitWordsHebrew[i] === (word)) {
             wordExists = true;
             break;
@@ -294,14 +295,12 @@ function paintFinalLetter(letter, color) {
     if (letter === 'ך') letter = 'כ';
     document.getElementById(letter).style.backgroundColor = color;
     document.getElementById(letter).style.color = "white";
-
-
 }
 function shareResults() {
     let shareResult = `וורדל\'ה ממיסבא # ${numOfWordale}` + "\n";
     shareResult += `נסיון ${wordCount} מתוך 6` + "\n";
 
-    for (i = 0; i < answersColors.length; i++) {
+    for (let i = 0; i < answersColors.length; i++) {
         let tempAnswer = answersColors[i].toString();
         const result = tempAnswer.replaceAll(",", "");
         shareResult = shareResult + result + "\n";
@@ -312,7 +311,6 @@ function shareResults() {
     // let shareButton = "<input id=\"shareButton\" onclick=\"shareResults()\" value=\"תוצאות הועתקו ללוח\">"
     // document.getElementById('notify2').innerHTML = shareButton;
     document.getElementById("shareButton").innerHTML = "תוצאות הועתקו ללוח";
-
 }
 function openInstructions() {
     if (document.getElementById('instructions').style.visibility === "hidden") {
@@ -328,7 +326,6 @@ function saveUserData() {
     //saves the answers arrays of today
     localStorage.setItem('answersColors', answersColors);
     localStorage.setItem('answersLetters', answersLetters)
-
 }
 // loadUserData loads the data saved on localStorage and fills the tiles with older answers. this only happens if the day is today.
 function loadUserData() {
@@ -341,11 +338,11 @@ function loadUserData() {
     //only if day has changed:
     if (todayNoHours === savedDateCompare) {
         answersLetters = localStorage.getItem('answersLetters').split(",");
-        for (k = 0; k < answersLetters.length; k++) {
-            for (m = 0; m < answersLetters[k].length; m++) {
+        for (let k = 0; k < answersLetters.length; k++) {
+            for (let m = 0; m < answersLetters[k].length; m++) {
                 document.getElementById(`tile${k + 1}${m + 1}`).innerHTML = answersLetters[k][m];
             }
-            currentRow = k + 1;
+            let currentRow = k + 1;
             currentWord = answersLetters[k];
             wordCount = k + 1;
             rowCount = rowCount + 1;
@@ -450,6 +447,11 @@ const suffixLetterToMiddleLetter = {
     'ף':'פ',
     'ך':'כ',
 }
+window.clickLetter = clickLetter;
+window.eraseLetter = eraseLetter;
+window.sendWord = sendWord;
+window.shareResults = shareResults;
+window.openInstructions = openInstructions;
 window.addEventListener('keydown', function (e) {
     console.log(e.key);
     if (e.key === 'Enter') {
@@ -466,46 +468,4 @@ window.addEventListener('keydown', function (e) {
         clickLetter(suffixLetterToMiddleLetter[hebrewWordFromEnglish] || hebrewWordFromEnglish);
     }
 });
-
-// runAtMidnight(window.location.reload);
-
-// function runAtMidnight(fn){
-//     var midnight = new Date();
-//     midnight.setHours(24, 0, 0, 0);
-//     var timeUntilMidnight = midnight.getTime() - Date.now();
-//     setTimeout(fn, timeUntilMidnight);
-// }
-/*
-function getWordsToArray(){
-    hebWordsArray=[];
-    const fs = require('fs')
-    let wordExists = false;
-    var wordsHebrew = fs.readFileSync('he-IL.dic', 'utf8')
-    splitWordsHebrew = wordsHebrew.split('\r\n');
-    for (i = 0; i < splitWordsHebrew.length; i++) {
-        if (splitWordsHebrew[i].length===5) {
-            if (!(splitWordsHebrew[i].includes('\"'))){
-            hebWordsArray.push(splitWordsHebrew[i]);
-            }
-        }
-    }
-    var file = fs.createWriteStream('hello2.txt');
-    file.on('error', function(err) { Console.log(err) });
-    hebWordsArray.forEach(value => file.write(`${value} `));
-    file.end();
-}
-*/
-//const fs = require('fs')
-
-// var arr = [];
-// while(arr.length < 800){
-//     var r = Math.floor(Math.random() * 375245) + 1;
-//     if(arr.indexOf(r) === -1) arr.push(r);
-// }
-// console.log(arr);
-/*
-var file = fs.createWriteStream('randoms.txt');
-    file.on('error', function(err) { Console.log(err) });
-    arr.forEach(value => file.write(`${value} `));
-    file.end();*/
 
