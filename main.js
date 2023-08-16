@@ -307,7 +307,7 @@ function shareResults() {
         shareResult = shareResult + result + "\n";
 
     }
-    shareResult = shareResult + "\n" + "וורדל ממיסבא:" + "\n" + "https://idoadler.github.io/mamisabawordale";
+    shareResult = shareResult + "\n" + "וורדל ממיסבא:" + "\n" + "https://mamisaba.ido.wtf";
     navigator.clipboard.writeText(shareResult);
     // let shareButton = "<input id=\"shareButton\" onclick=\"shareResults()\" value=\"תוצאות הועתקו ללוח\">"
     // document.getElementById('notify2').innerHTML = shareButton;
