@@ -42,7 +42,7 @@ console.log(today)
     numOfWordale = differenceInDays - fakeDays;
 console.log(numOfWordale)
 //console.log(listOfWords[differenceInDays])
-    return listOfWords[differenceInDays];
+    return listOfWords[differenceInDays%listOfWords.length];
 }
 
 function clickLetter(value) {
