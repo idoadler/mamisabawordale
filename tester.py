@@ -68,3 +68,14 @@ print("Duplicate words found:", duplicates)
 
 print("The index of today's word is:", word_index)
 print("The word of today is[" , word_index%len(user_words) , "]:", user_words[word_index%len(user_words)])
+
+test = ""
+test_words = re.findall(r'\b\w{5}\b', test)
+test_duplicates = find_duplicates(test_words + user_words)
+print("New duplicate words found:", test_duplicates)
+new_missinsg = check_words_in_js(test_words, hebrew_words_in_js)
+print("New missing words in the JS file:", ' '.join(new_missinsg))
+filtered_test = [element for element in test_words if element not in test_duplicates]
+print("Words to add:")
+for element in filtered_test:
+    print(f'\t"{element}",')
