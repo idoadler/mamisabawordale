@@ -23,7 +23,7 @@ let answersLetters = [];
 let numOfWordale = 0;
 // the launch date of wordale
 const launchDate = new Date(2023,6,12)
-const fakeDays = 10
+const fakeDays = 62
 //today:
 let today = new Date();
 //word index is the numOfWordale calculated later on

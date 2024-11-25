@@ -15,7 +15,7 @@ launch_date = datetime(2023, 7, 12)  # Adjust month to Python's 0-indexed months
 today = datetime.now()
 
 # Set the fake days used in your JavaScript
-fake_days = 10
+fake_days = 62
 
 # Calculate the word index
 word_index = calculate_word_index(launch_date, today, fake_days)
@@ -66,7 +66,7 @@ duplicates = find_duplicates(user_words)
 print("Duplicate words found:", duplicates)
 
 
-print("The index of today's word is:", word_index)
+print("The index of today's word is:", word_index-fake_days)
 print("The word of today is[" , word_index%len(user_words) , "]:", user_words[word_index%len(user_words)])
 
 test = ""
