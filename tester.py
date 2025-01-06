@@ -67,9 +67,9 @@ print("Duplicate words found:", duplicates)
 
 
 print("The index of today's word is:", word_index-fake_days)
-print("The word of today is[" , word_index%len(user_words) , "]:", user_words[word_index%len(user_words)])
+print("The word of today is [", word_index%len(user_words), "]:", user_words[word_index%len(user_words)])
 
-test = ""
+test = "רפואה בריאות נקיון שפיות"
 test_words = re.findall(r'\b\w{5}\b', test)
 test_duplicates = find_duplicates(test_words + user_words)
 print("New duplicate words found:", test_duplicates)
@@ -79,3 +79,6 @@ filtered_test = [element for element in test_words if element not in test_duplic
 print("Words to add:")
 for element in filtered_test:
     print(f'\t"{element}",')
+
+print("The word of today after adding", len(filtered_test), "new words is:", word_index%(len(user_words)+len(filtered_test)),
+      "\nCurrently:", user_words[word_index%(len(user_words)+len(filtered_test))])
