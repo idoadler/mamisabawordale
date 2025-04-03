@@ -24,7 +24,7 @@
     <meta http-equiv='expires' content='0'>
     <meta http-equiv='pragma' content='no-cache'>
     <script>
-        if (location.protocol !== 'https:') {
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && !location.href.includes('ido.wtf/games/drawsomething')) {
             location.replace(`https:${location.href.substring(location.protocol.length)}`);
         }
     </script>
