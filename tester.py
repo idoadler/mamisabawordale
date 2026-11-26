@@ -69,7 +69,7 @@ print("Duplicate words found:", duplicates)
 print("The index of today's word is:", word_index-fake_days)
 print("The word of today is [", word_index%len(user_words), "]:", user_words[word_index%len(user_words)])
 
-test = "רפואה בריאות נקיון שפיות"
+test = "מולדת נשיקה מסטיק אבטיח דמיון סיפור תיקון תפילה תמונה עיתון החלים אחיות קסמים כלבים עולמי מכשפי שיקוף מזכרת אופיר פתיחה תפילה עטיפה מריבה בריאה חליפה תפקיד טבעון עבודה מכונה מסיבה גדולה כולנו יולדת פורים חולצה פולין משונה נקיון מטעין רוסית שביתה תקליט קיבוץ זיקוק אירוע מורשת גילוח חשיבה תלונה"
 test_words = re.findall(r'\b\w{5}\b', test)
 test_duplicates = find_duplicates(test_words + user_words)
 print("New duplicate words found:", test_duplicates)
