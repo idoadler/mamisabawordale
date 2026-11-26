@@ -460,10 +460,11 @@ function countDownTimer() {
 }
 loadUserData();
 
+// When the player comes back to the tab on a new day, reload to show the new word.
+// (This used to reload when the tab was hidden, which could cancel the game link navigation.)
 document.addEventListener("visibilitychange",function(){
-    //document.getElementById(`tile${rowCount}1`)
-    if(currentWord==='' && document.visibilityState === 'hidden'){
-    location.reload();
+    if(currentWord==='' && document.visibilityState === 'visible' && new Date().toDateString() !== today.toDateString()){
+        location.reload();
     }
 });
 const englishKeyboardToHebrew = {
