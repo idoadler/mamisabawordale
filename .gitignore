@@ -1,1 +1,9 @@
 .DS_Store
+
+# local HTTPS dev server output
+cert.pem
+key.pem
+__pycache__/
+
+# machine-specific IDE settings
+.idea/misc.xml
