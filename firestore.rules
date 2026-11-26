@@ -1,0 +1,32 @@
+rules_version = '2';
+
+// Firestore rules for the poundr-survey project.
+// Paste into Firebase console -> Firestore Database -> Rules, then Publish.
+//
+// Anything not matched below is denied. The Admin SDK (export_guesses.py)
+// ignores these rules, so exporting keeps working.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Mami Saba Wordale guesses, written by storeWord() in firebase.js.
+    // Players may only add new guesses; nobody can read, edit or delete them.
+    match /mamiSaba/{guessId} {
+      allow create: if request.resource.data.keys().hasOnly(['word', 'guessed', 'day', 'sessionId'])
+                    && request.resource.data.keys().hasAll(['word', 'guessed', 'day', 'sessionId'])
+                    && request.resource.data.word is string
+                    && request.resource.data.word.size() == 5
+                    && request.resource.data.guessed is int
+                    && request.resource.data.guessed >= 1
+                    && request.resource.data.guessed <= 7
+                    && request.resource.data.day is string
+                    && request.resource.data.day.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')
+                    && request.resource.data.sessionId is string
+                    && request.resource.data.sessionId.size() >= 1
+                    && request.resource.data.sessionId.size() <= 10;
+    }
+
+    // paramChoices (the poundr survey) has been closed since 2026-01-01 and
+    // stays closed. If the survey needs writes again, add a rule like the one
+    // above for its fields.
+  }
+}
