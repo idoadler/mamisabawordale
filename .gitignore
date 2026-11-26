@@ -7,3 +7,9 @@ __pycache__/
 
 # machine-specific IDE settings
 .idea/misc.xml
+
+# Firebase admin key and exported guess data (private)
+serviceAccount.json
+*-firebase-adminsdk-*.json
+guesses.csv
+guesses_summary.csv
