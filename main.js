@@ -23,7 +23,9 @@ let answersLetters = [];
 let numOfWordale = 0;
 // the launch date of wordale
 const utcStart = Date.UTC(2023,6,12)
-const fakeDays = 62 // used to set specific word in the loop
+// Shifts which word in wordlist.js is shown each day (the game number is not affected).
+// When inserting words, recalculate it so today's word stays the same (tester.py uses the same value).
+const fakeDays = 231
 let today = new Date();
 //word index is the numOfWordale calculated later on
 let pickedWord = pickWord();
@@ -34,10 +36,9 @@ function pickWord() {
     const utcToday = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
     const millisecondsPerDay = 1000 * 60 * 60 * 24;
     var differenceInDays = Math.floor((utcToday - utcStart) / millisecondsPerDay);
-    numOfWordale = differenceInDays - fakeDays;
+    numOfWordale = differenceInDays;
 console.log(numOfWordale)
-//console.log(listOfWords[differenceInDays])
-    return listOfWords[differenceInDays%listOfWords.length];
+    return listOfWords[(differenceInDays + fakeDays) % listOfWords.length];
 }
 
 function clickLetter(value) {

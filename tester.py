@@ -15,7 +15,7 @@ launch_date = datetime(2023, 7, 12)  # Adjust month to Python's 0-indexed months
 today = datetime.now()
 
 # Set the fake days used in your JavaScript
-fake_days = 62
+fake_days = 231  # must match fakeDays in main.js
 
 # Calculate the word index
 word_index = calculate_word_index(launch_date, today, fake_days)
