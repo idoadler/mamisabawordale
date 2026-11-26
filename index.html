@@ -193,8 +193,23 @@
         <div>
         </div>
     </div><!-- end #keyboard -->
-    <a href="https://ido.wtf/games/drawsomething">
-    <div id="coffee">!מה זה? יש פה משהו חדש</div></a>
+    <a id="gameLink" href="https://ido.wtf/games/drawsomething">
+    <div id="coffee">צייר משהו</div></a>
+    <script>
+        // Show one of these games at random on each visit.
+        (function () {
+            const games = [
+                { name: 'צייר משהו', url: 'https://ido.wtf/games/drawsomething' },
+                { name: 'ביבי רץ', url: 'https://bibirun.ido.wtf' },
+                { name: 'פריקל', url: 'https://sunbirdstudio.itch.io/prickle' },
+                { name: 'גזור ת\'כיפה', url: 'https://kippa.ido.wtf' },
+            ];
+            const game = games[Math.floor(Math.random() * games.length)];
+            const link = document.getElementById('gameLink');
+            link.href = game.url;
+            link.querySelector('#coffee').textContent = game.name;
+        })();
+    </script>
 
     <script type="module" src="firebase.js"></script>
     <script src="hebwords.js"></script>
